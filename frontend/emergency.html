@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency Service</title>
+</head>
+<body>
+
+<h2>Emergency Service Request</h2>
+
+<form id="emergencyForm">
+    <input type="text" id="name" placeholder="Your Name" required><br><br>
+
+    <input type="text" id="phone" placeholder="Phone Number" required><br><br>
+
+    <select id="service_type" required>
+        <option value="">Select Service</option>
+        <option value="plumber">Plumber</option>
+        <option value="electrician">Electrician</option>
+        <option value="mechanic">Mechanic</option>
+    </select><br><br>
+
+    <textarea id="description" placeholder="Describe your problem" required></textarea><br><br>
+
+    <button type="submit">Raise Emergency</button>
+</form>
+
+<p id="responseMsg"></p>
+
+<script src="emergency.js"></script>
+
+</body>
+</html>
