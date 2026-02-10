@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Provider Dashboard</title>
+</head>
+<body>
+
+<h2>Service Provider Dashboard</h2>
+
+<label>Select Service Type:</label>
+<select id="serviceType">
+    <option value="plumber">Plumber</option>
+    <option value="electrician">Electrician</option>
+    <option value="mechanic">Mechanic</option>
+</select>
+
+<button onclick="loadEmergencies()">Load Emergency Requests</button>
+
+<hr>
+
+<h3>Emergency Requests</h3>
+<div id="requestList"></div>
+
+<script src="js/provider.js"></script>
+
+</body>
+</html>
