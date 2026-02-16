@@ -108,7 +108,62 @@ def accept_request():
 
 
 # ----------------------------
+# COMPLETE JOB
+# ----------------------------
+@app.route("/api/complete", methods=["POST"])
+def complete_job():
+    data = request.json
+    request_id = data.get("request_id")
+    provider_id = data.get("provider_id")
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    # Mark request completed
+    cur.execute(
+        """
+        UPDATE service_requests
+        SET status = 'COMPLETED'
+        WHERE id = %s
+        """,
+        (request_id,)
+    )
+
+    # Make provider available again
+    cur.execute(
+        """
+        UPDATE providers
+        SET availability = 'AVAILABLE'
+        WHERE id = %s
+        """,
+        (provider_id,)
+    )
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return jsonify({"message": "Job completed successfully"})
+
+
+
+# ----------------------------
 # RUN SERVER
 # ----------------------------
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+@app.route("/api/provider/<int:id>", methods=["GET"])
+def get_provider(id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT availability FROM providers WHERE id = %s", (id,))
+    result = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    return jsonify({"availability": result[0]})

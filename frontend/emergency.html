@@ -3,29 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Emergency Service</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="bg-light light1"></div>
+    <div class="bg-light light2"></div>
 
-<h2>Emergency Service Request</h2>
 
-<form id="emergencyForm">
-    <input type="text" id="name" placeholder="Your Name" required><br><br>
+<div class="container">
+    <div class="card">
 
-    <input type="text" id="phone" placeholder="Phone Number" required><br><br>
+        <h2>🚨 Emergency Service Request</h2>
+        <p class="subtitle">Get instant help from nearby professionals</p>
 
-    <select id="service_type" required>
-        <option value="">Select Service</option>
-        <option value="plumber">Plumber</option>
-        <option value="electrician">Electrician</option>
-        <option value="mechanic">Mechanic</option>
-    </select><br><br>
+        <form id="emergencyForm">
 
-    <textarea id="description" placeholder="Describe your problem" required></textarea><br><br>
+            <div class="input-group">
+                <input type="text" id="name" required placeholder=" ">
+                <label>Your Name</label>
+            </div>
 
-    <button type="submit">Raise Emergency</button>
-</form>
+            <div class="input-group">
+                <input type="text" id="phone" required placeholder=" ">
+                <label>Phone Number</label>
+            </div>
 
-<p id="responseMsg"></p>
+            <div class="input-group">
+                <select id="service_type" required>
+                    <option value="">Select Service</option>
+                    <option value="plumber">Plumber</option>
+                    <option value="electrician">Electrician</option>
+                    <option value="mechanic">Mechanic</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <textarea id="description" required placeholder=" "></textarea>
+                <label>Describe your problem</label>
+            </div>
+
+            <button type="submit" class="btn">
+                Raise Emergency
+            </button>
+
+        </form>
+
+        <p id="responseMsg" class="response"></p>
+
+    </div>
+</div>
 
 <script src="js/emergency.js"></script>
 

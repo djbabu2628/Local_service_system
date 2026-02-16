@@ -1,28 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Provider Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h2>Service Provider Dashboard</h2>
+<div class="bg-light light1"></div>
+<div class="bg-light light2"></div>
 
-<label>Select Service Type:</label>
-<select id="serviceType">
+<div class="container">
+    <div class="card provider-card">
+        <h2>🛠 Emergency Requests</h2>
+        <p class="subtitle">Available jobs in your field</p>
+
+        <select id="serviceSelect" class="service-select">
     <option value="plumber">Plumber</option>
     <option value="electrician">Electrician</option>
     <option value="mechanic">Mechanic</option>
 </select>
 
-<button onclick="loadEmergencies()">Load Emergency Requests</button>
-
-<hr>
-
-<h3>Emergency Requests</h3>
-<div id="requestList"></div>
+        <div id="requestList" class="request-list">
+            <!-- Dynamic content yaha aayega -->
+        </div>
+    </div>
+</div>
 
 <script src="js/provider.js"></script>
-
 </body>
 </html>
