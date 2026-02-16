@@ -1,3 +1,7 @@
+let previousRequestCount = 0;
+let firstLoad = true;
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("serviceSelect");
 
@@ -5,10 +9,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     select.addEventListener("change", function() {
         fetchRequests(select.value);
-        
+         });
+        setInterval(() => {
+            fetchRequests(select.value);
+        }, 10000); // every 10 seconds
 
      ; // every 10 seconds
-    });
 });
 
 function checkAvailability() {
@@ -31,6 +37,13 @@ function fetchRequests(serviceType) {
     fetch(`http://127.0.0.1:5000/api/emergency/${serviceType}`)
         .then(res => res.json())
         .then(data => {
+            if (!firstLoad && data.length > previousRequestCount) {
+                showToast("New Emergency Job Available!", "success");
+            }
+
+            previousRequestCount = data.length;
+            firstLoad = false;
+
             console.log(data);
             const requestList = document.getElementById("requestList");
 
