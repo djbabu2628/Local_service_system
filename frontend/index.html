@@ -11,7 +11,12 @@
 
 <nav>
     <h2>Local Service</h2>
-    <ul>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        ☰
+    </div>
+
+    <ul id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="emergency.html">Raise Emergency</a></li>
         <li><a href="track.html">Track</a></li>
@@ -19,7 +24,12 @@
     </ul>
 </nav>
 
-<div class="hero">
+
+<div class="hero" class="reveal">
+
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+
     <h1>Instant Local Help When You Need It Most</h1>
     <p>Connect with trusted service providers in real time.</p>
 
@@ -34,26 +44,32 @@
     </div>
 </div>
 
-<section>
-    <h2 class="section-title">Our Features</h2>
+<section class="reveal">
+    <h2 class="section-title">Our Impact</h2>
 
-    <div class="features">
-        <div class="feature-card">
-            <h3>Real-Time Assignment</h3>
-            <p>Instant emergency alerts to providers.</p>
+    <div class="stats">
+        <div class="stat">
+            <h3 class="counter" data-target="150">0</h3>
+            <span>Jobs Completed</span>
         </div>
 
-        <div class="feature-card">
-            <h3>Live Tracking</h3>
-            <p>Track request status in real time.</p>
+        <div class="stat">
+            <h3 class="counter" data-target="50">0</h3>
+            <span>Active Providers</span>
         </div>
 
-        <div class="feature-card">
-            <h3>Smart Status Control</h3>
-            <p>Automatic provider availability management.</p>
+        <div class="stat">
+            <h3 class="counter" data-target="24">0</h3>
+            <span>24/7 Service</span>
+        </div>
+
+        <div class="stat">
+            <h3 class="counter" data-target="98">0</h3>
+            <span>% Satisfaction</span>
         </div>
     </div>
 </section>
+
 
 <footer>
     <p>© 2026 Local Service System</p>
