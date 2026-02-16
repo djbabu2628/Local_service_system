@@ -146,6 +146,44 @@ def complete_job():
     return jsonify({"message": "Job completed successfully"})
 
 
+# ----------------------------
+# TRACK REQUEST (USER SIDE)
+# ----------------------------
+@app.route("/api/track/<phone>", methods=["GET"])
+def track_request(phone):
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        SELECT sr.id, sr.status, p.name
+        FROM service_requests sr
+        LEFT JOIN providers p
+        ON sr.assigned_provider = p.id
+        WHERE sr.user_phone = %s
+        ORDER BY sr.id DESC
+        LIMIT 1
+        """,
+        (phone,)
+    )
+
+    result = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    if result:
+        return jsonify({
+            "id": result[0],
+            "status": result[1],
+            "provider_name": result[2]
+        })
+    else:
+        return jsonify({"message": "No request found"})
+
+
+
 
 # ----------------------------
 # RUN SERVER
