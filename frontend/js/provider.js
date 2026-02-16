@@ -77,9 +77,9 @@ function acceptJob(event, id) {
     })
     .then(res => res.json())
     .then(data => {
-
+        showToast("Job Accepted Successfully!", "success");
         const button = event.target;
-        const card = button.closest(".request-item");
+        
 
         button.innerText = "Complete Job";
         button.classList.remove("accept-btn");
@@ -90,7 +90,6 @@ function acceptJob(event, id) {
         };
 
     })
-    .catch(err => console.error(err));
 }
 
 
@@ -117,7 +116,8 @@ function completeJob(event, id) {
             card.remove();
         }, 400);
 
-        alert("Job Completed! You are now Available.");
+        showToast("Job Completed! You are now Available.", "success");
+
 
     })
     .catch(err => console.error(err));

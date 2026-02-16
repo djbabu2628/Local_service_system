@@ -21,21 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(result => {
-            const responseMsg = document.getElementById("responseMsg");
+                    showToast("Emergency request sent successfully!", "success");
+                    form.reset();
+                })
+                .catch(error => {
+                    showToast("Failed to send request", "error");
+                    console.error("Error:", error);
+                });
 
-            responseMsg.style.display = "block";
-            responseMsg.innerText = result.message;
-
-            setTimeout(() => {
-                responseMsg.style.display = "none";
-            }, 3000);
-
-            form.reset();
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
 
     });
 
 });
+

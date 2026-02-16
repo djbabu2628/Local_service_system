@@ -10,7 +10,7 @@ function trackRequest() {
 
             if (data.message) {
                 box.style.display = "block";
-                box.innerText = "No request found.";
+                showToast("No request found for this number", "error");
                 return;
             }
 
