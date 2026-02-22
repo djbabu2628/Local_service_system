@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Provider Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2>Provider Login</h2>
+
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span id="providerName"></span>
+                <button onclick="logout()" class="btn" style="width:auto; padding:8px 15px;">
+                    Logout
+                </button>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <span id="providerName"></span>
+                <button onclick="logout()" class="btn" style="width:auto; padding:8px 15px;">
+                    Logout
+                </button>
+            </div>
+
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Enter Email">
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Enter Password">
+        </div>
+
+        <button class="btn" onclick="login()">Login</button>
+    </div>
+</div>
+
+<script src="js/login.js"></script>
+</body>
+</html>

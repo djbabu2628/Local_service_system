@@ -214,6 +214,41 @@ def get_provider_jobs(provider_id, service_type):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+# New route for log-in
+@app.route("/api/provider/login", methods=["POST"])
+def provider_login():
+    data = request.json
+
+    email = data.get("email")
+    password = data.get("password")
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT id, name FROM providers
+        WHERE email = %s AND password = %s
+    """, (email, password))
+
+    provider = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    if provider:
+        return jsonify({
+            "success": True,
+            "provider_id": provider[0],
+            "provider_name": provider[1]
+        })
+    else:
+        return jsonify({
+            "success": False,
+            "message": "Invalid credentials"
+        })
+
+
 # ----------------------------
 # RUN SERVER
 # ----------------------------

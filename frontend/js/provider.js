@@ -1,7 +1,20 @@
 let previousRequestCount = 0;
 let firstLoad = true;
-let CURRENT_PROVIDER_ID = 1;
 
+let CURRENT_PROVIDER_ID = localStorage.getItem("provider_id");
+
+if (!CURRENT_PROVIDER_ID) {
+    window.location.href = "provider_login.html";
+}
+
+let providerName = localStorage.getItem("provider_name");
+
+if (providerName) {
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("providerName").innerText =
+            "Logged in as: " + providerName;
+    });
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("serviceSelect");
@@ -156,3 +169,8 @@ function completeJob(event, id) {
     .catch(err => console.error(err));
 }
 
+function logout() {
+    localStorage.removeItem("provider_id");
+    localStorage.removeItem("provider_name");
+    window.location.href = "provider_login.html";
+}
