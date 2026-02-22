@@ -1,5 +1,6 @@
 let previousRequestCount = 0;
 let firstLoad = true;
+let CURRENT_PROVIDER_ID = 1;
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -14,11 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
             fetchRequests(select.value);
         }, 10000); // every 10 seconds
 
-     ; // every 10 seconds
+      // every 10 seconds
 });
 
 function checkAvailability() {
-    fetch("http://127.0.0.1:5000/api/provider/1")
+    fetch(`http://127.0.0.1:5000/api/provider/${CURRENT_PROVIDER_ID}`)
         .then(res => res.json())
         .then(data => {
             if (data.availability === "BUSY") {
@@ -34,49 +35,69 @@ function checkAvailability() {
 
 
 function fetchRequests(serviceType) {
-    fetch(`http://127.0.0.1:5000/api/emergency/${serviceType}`)
+
+    fetch(`http://127.0.0.1:5000/api/provider/jobs/${CURRENT_PROVIDER_ID}/${serviceType}`)
         .then(res => res.json())
         .then(data => {
-            if (!firstLoad && data.length > previousRequestCount) {
-                showToast("New Emergency Job Available!", "success");
-            }
 
-            previousRequestCount = data.length;
-            firstLoad = false;
+            const pendingDiv = document.getElementById("pendingJobs");
+            const activeDiv = document.getElementById("activeJob");
 
-            console.log(data);
-            const requestList = document.getElementById("requestList");
-
-            if (data.length === 0) {
-                requestList.innerHTML = `
+            // --------------------
+            // Pending Jobs
+            // --------------------
+            if (data.pending.length === 0) {
+                pendingDiv.innerHTML = `
                     <div class="request-item">
-                        <h4>No Emergency Requests</h4>
-                        <p>Currently no active jobs available.</p>
+                        <p>No available jobs</p>
                     </div>
                 `;
             } else {
-                requestList.innerHTML = "";
-                data.forEach(item => {
-    requestList.innerHTML += `
-        <div class="request-item">
-            <h4>${item[1]}</h4>
-            <p><strong>Phone:</strong> ${item[2]}</p>
-            <p>${item[4]}</p>
-            <button class="accept-btn" onclick="acceptJob(event, ${item[0]})">
-
-            Accept Job
-            </button>
-
-        </div>
-    `;
-});
-
-
+                pendingDiv.innerHTML = "";
+                data.pending.forEach(item => {
+                    pendingDiv.innerHTML += `
+                        <div class="request-item">
+                            <h4>${item[1]}</h4>
+                            <p><strong>Phone:</strong> ${item[2]}</p>
+                            <p>${item[4]}</p>
+                            <button class="accept-btn" onclick="acceptJob(event, ${item[0]})">
+                                Accept Job
+                            </button>
+                        </div>
+                    `;
+                });
             }
-        });
+
+            // --------------------
+            // Active Job
+            // --------------------
+            if (data.active) {
+                activeDiv.innerHTML = `
+                    <div class="request-item active-highlight">
+                        <h4>${data.active[1]}</h4>
+                        <p><strong>Phone:</strong> ${data.active[2]}</p>
+                        <p>${data.active[4]}</p>
+                        <button class="complete-btn" onclick="completeJob(event, ${data.active[0]})">
+                            Complete Job
+                        </button>
+                    </div>
+                `;
+            } else {
+                activeDiv.innerHTML = `
+                    <div class="request-item">
+                        <p>No active job</p>
+                    </div>
+                `;
+            }
+
+        })
+        .catch(err => console.error(err));
 }
 
 function acceptJob(event, id) {
+
+    const button = event.target;
+    button.disabled = true;
 
     fetch("http://127.0.0.1:5000/api/accept", {
         method: "POST",
@@ -85,13 +106,12 @@ function acceptJob(event, id) {
         },
         body: JSON.stringify({
             request_id: id,
-            provider_id: 1
+            provider_id: CURRENT_PROVIDER_ID
         })
     })
     .then(res => res.json())
     .then(data => {
         showToast("Job Accepted Successfully!", "success");
-        const button = event.target;
         
 
         button.innerText = "Complete Job";
@@ -115,7 +135,7 @@ function completeJob(event, id) {
         },
         body: JSON.stringify({
             request_id: id,
-            provider_id: 1
+            provider_id: CURRENT_PROVIDER_ID
         })
     })
     .then(res => res.json())

@@ -398,3 +398,20 @@ textarea {
         opacity: 1;
     }
 }
+
+.status-box {
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+.status-pending { background: orange; }
+.status-assigned { background: dodgerblue; }
+.status-completed { background: green; }
+.status-notfound { background: #444; }
+
+
+.active-highlight {
+    border: 2px solid dodgerblue;
+    background: rgba(30, 144, 255, 0.1);
+}

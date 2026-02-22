@@ -39,7 +39,7 @@ function fetchStatus() {
 
             if (data.message) {
                 box.innerHTML = `
-                    <div style="padding:15px; background:#444; color:white; border-radius:10px;">
+                    <div class="status-box" style="background:#444;">
                         No request found for this number.
                     </div>
                 `;
@@ -65,7 +65,7 @@ function fetchStatus() {
             }
 
             box.innerHTML = `
-                <div style="padding:15px; border-radius:10px; background:${badgeColor}; color:white;">
+                <div class="status-box status-${data.status.toLowerCase()}">
                     ${statusText}
                 </div>
             `;

@@ -5,5 +5,6 @@ def get_db_connection():
         host="localhost",
         user="root",
         password="Mahi2628",
-        database="local_service_system"
+        database="local_service_system",
+        buffered=True   # 🔥 ADD THIS
     )
