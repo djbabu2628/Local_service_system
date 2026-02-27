@@ -249,13 +249,6 @@ def provider_login():
         })
 
 
-# ----------------------------
-# RUN SERVER
-# ----------------------------
-if __name__ == "__main__":
-    app.run(debug=True)
-
-
 
 @app.route("/api/provider/<int:id>", methods=["GET"])
 def get_provider(id):
@@ -269,3 +262,10 @@ def get_provider(id):
     conn.close()
 
     return jsonify({"availability": result[0]})
+
+# ----------------------------
+# RUN SERVER
+# ----------------------------
+if __name__ == "__main__":
+    app.run(debug=True)
+

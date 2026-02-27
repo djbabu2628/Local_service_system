@@ -14,6 +14,13 @@
 <div class="container">
     <div class="card provider-card">
         <h2>🛠 Emergency Requests</h2>
+        <div class="status-badge" id="statusBadge"></div>
+        <div class="provider-header">
+    <span id="providerName"></span>
+    <button onclick="logout()" class="btn logout-btn">
+        Logout
+    </button>
+</div>
         <p class="subtitle">Available jobs in your field</p>
 
         <select id="serviceSelect" class="service-select">

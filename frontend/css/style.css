@@ -415,3 +415,33 @@ textarea {
     border: 2px solid dodgerblue;
     background: rgba(30, 144, 255, 0.1);
 }
+
+.provider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.logout-btn {
+    width: auto;
+    padding: 8px 15px;
+}   
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.status-available {
+    background: #e6f9ed;
+    color: #1b8a3b;
+}
+
+.status-busy {
+    background: #ffe6e6;
+    color: #c0392b;
+}

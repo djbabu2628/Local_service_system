@@ -36,12 +36,7 @@ function checkAvailability() {
         .then(res => res.json())
         .then(data => {
             if (data.availability === "BUSY") {
-                document.getElementById("requestList").innerHTML = `
-                    <div class="request-item">
-                        <h4>You are currently busy</h4>
-                        <p>Complete your current job before accepting new ones.</p>
-                    </div>
-                `;
+                showToast("You are currently busy", "error");
             }
         });
 }
