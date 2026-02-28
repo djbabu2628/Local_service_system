@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("serviceSelect");
 
     fetchRequests(select.value);
+    loadStats();
 
     select.addEventListener("change", function() {
         fetchRequests(select.value);
@@ -168,4 +169,13 @@ function logout() {
     localStorage.removeItem("provider_id");
     localStorage.removeItem("provider_name");
     window.location.href = "provider_login.html";
+}
+
+function loadStats() {
+    fetch(`http://127.0.0.1:5000/api/provider/stats/${CURRENT_PROVIDER_ID}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("completedCount").innerText = data.completed;
+            document.getElementById("activeCount").innerText = data.active;
+        });
 }

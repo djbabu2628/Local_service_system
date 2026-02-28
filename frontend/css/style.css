@@ -445,3 +445,17 @@ textarea {
     background: #ffe6e6;
     color: #c0392b;
 }
+
+.stats-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}

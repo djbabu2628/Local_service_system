@@ -269,3 +269,29 @@ def get_provider(id):
 if __name__ == "__main__":
     app.run(debug=True)
 
+@app.route("/api/provider/stats/<int:provider_id>", methods=["GET"])
+def provider_stats(provider_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    # Total completed jobs
+    cur.execute("""
+        SELECT COUNT(*) FROM service_requests
+        WHERE assigned_provider = %s AND status = 'COMPLETED'
+    """, (provider_id,))
+    completed = cur.fetchone()[0]
+
+    # Active job
+    cur.execute("""
+        SELECT COUNT(*) FROM service_requests
+        WHERE assigned_provider = %s AND status = 'ASSIGNED'
+    """, (provider_id,))
+    active = cur.fetchone()[0]
+
+    cur.close()
+    conn.close()
+
+    return jsonify({
+        "completed": completed,
+        "active": active
+    })
