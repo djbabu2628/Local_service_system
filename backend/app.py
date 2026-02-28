@@ -26,7 +26,7 @@ def create_emergency():
     description = data.get("description")
 
     conn = get_db_connection()
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary=True)
 
     cur.execute(
         """
@@ -50,7 +50,7 @@ def create_emergency():
 @app.route("/api/emergency/<service_type>", methods=["GET"])
 def get_emergencies(service_type):
     conn = get_db_connection()
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary=True)
 
     cur.execute(
         """
@@ -79,7 +79,7 @@ def accept_request():
         provider_id = data.get("provider_id")
 
         conn = get_db_connection()
-        cur = conn.cursor()
+        cur = conn.cursor(dictionary=True)
 
         # Accept only if still pending
         cur.execute("""
@@ -122,7 +122,7 @@ def complete_request():
         provider_id = data.get("provider_id")
 
         conn = get_db_connection()
-        cur = conn.cursor()
+        cur = conn.cursor(dictionary=True)
 
         cur.execute("""
             UPDATE service_requests
@@ -154,7 +154,7 @@ def complete_request():
 def track_request(phone):
     try:
         conn = get_db_connection()
-        cur = conn.cursor()
+        cur = conn.cursor(dictionary=True)
 
         cur.execute("""
             SELECT sr.status, p.name
@@ -187,7 +187,7 @@ def track_request(phone):
 def get_provider_jobs(provider_id, service_type):
     try:
         conn = get_db_connection()
-        cur = conn.cursor()
+        cur = conn.cursor(dictionary=True)
 
         # 1️⃣ Pending jobs
         cur.execute("""
@@ -224,7 +224,7 @@ def provider_login():
     password = data.get("password")
 
     conn = get_db_connection()
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary=True)
 
     cur.execute("""
         SELECT id, name FROM providers
@@ -239,8 +239,8 @@ def provider_login():
     if provider:
         return jsonify({
             "success": True,
-            "provider_id": provider[0],
-            "provider_name": provider[1]
+            "provider_id": provider["id"],
+            "provider_name": provider["name"]
         })
     else:
         return jsonify({
@@ -253,7 +253,7 @@ def provider_login():
 @app.route("/api/provider/<int:id>", methods=["GET"])
 def get_provider(id):
     conn = get_db_connection()
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary=True)
 
     cur.execute("SELECT availability FROM providers WHERE id = %s", (id,))
     result = cur.fetchone()
@@ -263,18 +263,13 @@ def get_provider(id):
 
     return jsonify({"availability": result[0]})
 
-# ----------------------------
-# RUN SERVER
-# ----------------------------
-if __name__ == "__main__":
-    app.run(debug=True)
 
 @app.route("/api/provider/stats/<int:provider_id>", methods=["GET"])
 def provider_stats(provider_id):
     conn = get_db_connection()
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary=True)
 
-    # Total completed jobs
+    # Total completed jobs.c
     cur.execute("""
         SELECT COUNT(*) FROM service_requests
         WHERE assigned_provider = %s AND status = 'COMPLETED'
@@ -295,3 +290,10 @@ def provider_stats(provider_id):
         "completed": completed,
         "active": active
     })
+
+# ----------------------------
+# RUN SERVER
+# ----------------------------
+if __name__ == "__main__":
+    app.run(debug=True)
+

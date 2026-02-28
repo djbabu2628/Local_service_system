@@ -57,7 +57,7 @@ function fetchRequests(serviceType) {
             // --------------------
             if (data.pending.length === 0) {
                 pendingDiv.innerHTML = `
-                    <div class="request-item">
+                    <div class="request-item active-job-card">
                         <p>No available jobs</p>
                     </div>
                 `;
@@ -66,10 +66,10 @@ function fetchRequests(serviceType) {
                 data.pending.forEach(item => {
                     pendingDiv.innerHTML += `
                         <div class="request-item">
-                            <h4>${item[1]}</h4>
-                            <p><strong>Phone:</strong> ${item[2]}</p>
-                            <p>${item[4]}</p>
-                            <button class="accept-btn" onclick="acceptJob(event, ${item[0]})">
+                            <h4>${item.user_name}</h4>
+                            <p><strong>Phone:</strong> ${item.user_phone}</p>
+                            <p>${item.description}</p>
+                            <button class="accept-btn" onclick="acceptJob(event, ${item.id})">
                                 Accept Job
                             </button>
                         </div>
@@ -121,6 +121,7 @@ function acceptJob(event, id) {
     .then(res => res.json())
     .then(data => {
         showToast("Job Accepted Successfully!", "success");
+        loadStats();
         
 
         button.innerText = "Complete Job";
@@ -160,7 +161,7 @@ function completeJob(event, id) {
 
         showToast("Job Completed! You are now Available.", "success");
 
-
+        loadStats();
     })
     .catch(err => console.error(err));
 }
