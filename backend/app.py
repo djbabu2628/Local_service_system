@@ -248,7 +248,61 @@ def provider_login():
             "message": "Invalid credentials"
         })
 
+@app.route("/api/user/register", methods=["POST"])
+def user_register():
+    try:
+        data = request.json
+        name = data.get("name")
+        email = data.get("email")
+        password = data.get("password")
 
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute("""
+            INSERT INTO users (name, email, password)
+            VALUES (%s, %s, %s)
+        """, (name, email, password))
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return jsonify({"success": True, "message": "User registered successfully"})
+
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+    
+@app.route("/api/user/login", methods=["POST"])
+def user_login():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    cur.execute("""
+        SELECT id, name FROM users
+        WHERE email = %s AND password = %s
+    """, (email, password))
+
+    user = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    if user:
+        return jsonify({
+            "success": True,
+            "user_id": user["id"],
+            "user_name": user["name"]
+        })
+    else:
+        return jsonify({
+            "success": False,
+            "message": "Invalid credentials"
+        })
 
 @app.route("/api/provider/<int:id>", methods=["GET"])
 def get_provider(id):
