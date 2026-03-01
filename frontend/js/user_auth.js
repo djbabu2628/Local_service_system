@@ -1,3 +1,6 @@
+localStorage.setItem("user_id", data.user_id);
+localStorage.setItem("user_name", data.user_name);
+
 function registerUser() {
 
     const name = document.getElementById("name").value.trim();

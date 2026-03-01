@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+<div class="container">
+    <div class="card">
+
+        <h2>Welcome, <span id="userName"></span></h2>
+        <p class="subtitle">Manage your service requests</p>
+
+        <div style="margin-top:20px;">
+            <button class="btn" onclick="goToEmergency()">Raise Emergency</button>
+        </div>
+
+        <div style="margin-top:15px;">
+            <button class="btn" onclick="goToTrack()">Track Request</button>
+        </div>
+
+        <div style="margin-top:15px;">
+            <button class="btn" onclick="logout()">Logout</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/user_dashboard.js"></script>
+
+</body>
+</html>

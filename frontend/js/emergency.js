@@ -17,7 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+                body: JSON.stringify({
+                    user_id: localStorage.getItem("user_id"),
+                    name: document.getElementById("name").value,
+                    phone: document.getElementById("phone").value,
+                    service_type: document.getElementById("service_type").value,
+                    description: document.getElementById("description").value
         })
         .then(response => response.json())
         .then(result => {
@@ -27,10 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => {
                     showToast("Failed to send request", "error");
                     console.error("Error:", error);
-                });
+                })
 
 
     });
 
 });
-
+});

@@ -18,30 +18,32 @@ def home():
 # ----------------------------
 @app.route("/api/emergency", methods=["POST"])
 def create_emergency():
-    data = request.json
+    try:
+        data = request.json
 
-    name = data.get("name")
-    phone = data.get("phone")
-    service_type = data.get("service_type")
-    description = data.get("description")
+        user_id = data.get("user_id")
+        name = data.get("name")
+        phone = data.get("phone")
+        service_type = data.get("service_type")
+        description = data.get("description")
 
-    conn = get_db_connection()
-    cur = conn.cursor(dictionary=True)
+        conn = get_db_connection()
+        cur = conn.cursor()
 
-    cur.execute(
-        """
-        INSERT INTO service_requests
-        (user_name, user_phone, service_type, description, is_emergency, status)
-        VALUES (%s, %s, %s, %s, 1, 'PENDING')
-        """,
-        (name, phone, service_type, description)
-    )
+        cur.execute("""
+            INSERT INTO service_requests
+            (user_id, user_name, user_phone, service_type, description, is_emergency, status)
+            VALUES (%s, %s, %s, %s, %s, 1, 'PENDING')
+        """, (user_id, name, phone, service_type, description))
 
-    conn.commit()
-    cur.close()
-    conn.close()
+        conn.commit()
+        cur.close()
+        conn.close()
 
-    return jsonify({"message": "Emergency request created"})
+        return jsonify({"message": "Emergency request created"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 # ----------------------------
