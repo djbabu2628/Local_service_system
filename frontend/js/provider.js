@@ -83,10 +83,10 @@ function fetchRequests(serviceType) {
             if (data.active) {
                 activeDiv.innerHTML = `
                     <div class="request-item active-highlight">
-                        <h4>${data.active[1]}</h4>
-                        <p><strong>Phone:</strong> ${data.active[2]}</p>
-                        <p>${data.active[4]}</p>
-                        <button class="complete-btn" onclick="completeJob(event, ${data.active[0]})">
+                        <h4>${data.active.user_name}</h4>
+                        <p><strong>Phone:</strong> ${data.active.user_phone}</p>
+                        <p>${data.active.description}</p>
+                        <button class="complete-btn" onclick="completeJob(event, ${data.active.id})">
                             Complete Job
                         </button>
                     </div>

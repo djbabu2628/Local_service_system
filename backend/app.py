@@ -177,8 +177,8 @@ def track_request(phone):
             return jsonify({"message": "No request found"})
 
         return jsonify({
-            "status": result[0],
-            "provider_name": result[1] if result[1] else None
+            "status": result["status"],
+            "provider_name": result["name"] if result["name"] else None
         })
 
     except Exception as e:
@@ -317,7 +317,7 @@ def get_provider(id):
     cur.close()
     conn.close()
 
-    return jsonify({"availability": result[0]})
+    return jsonify({"availability": result["availability"]})
 
 
 @app.route("/api/provider/stats/<int:provider_id>", methods=["GET"])
@@ -327,17 +327,16 @@ def provider_stats(provider_id):
 
     # Total completed jobs.c
     cur.execute("""
-        SELECT COUNT(*) FROM service_requests
+        SELECT COUNT(*) AS total_completed FROM service_requests
         WHERE assigned_provider = %s AND status = 'COMPLETED'
     """, (provider_id,))
-    completed = cur.fetchone()[0]
+    completed = cur.fetchone()["total_completed"]
 
-    # Active job
     cur.execute("""
-        SELECT COUNT(*) FROM service_requests
+        SELECT COUNT(*) AS total_active FROM service_requests
         WHERE assigned_provider = %s AND status = 'ASSIGNED'
     """, (provider_id,))
-    active = cur.fetchone()[0]
+    active = cur.fetchone()["total_active"]
 
     cur.close()
     conn.close()
